@@ -1,3 +1,16 @@
+# Description: single function
+# Inputs:
+#  - modelsum: summary of a regression model [(g)lm, (g)lmer]
+#  - contrasts: list of emmeans contrasts
+#  - tables: list of dataframes/tibbles
+#  - tabnames: vector of names associated with 'tables'
+#  - outpath: outpath for multi-tab xlsx file
+# Output:
+#  - single xlsx file with one sheet for the model summary, one sheet for each contrast specified,
+#    and one sheet for each table (named in accordance with tabnames)
+# Author: Jessica M. Alexander
+# Last Updated: 2025-05-22
+
 analysistable <- function(modelsum, contrasts, tables, tabnames, outpath){
   
   if(length(tables)!=length(tabnames)){
