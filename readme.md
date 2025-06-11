@@ -8,6 +8,7 @@ This is a collection of miscellaneous scripts that I have written.  Please feel 
 
 ### R
 * **analysistable.R:** function to output a multitab .xlsx file with model summary, pairwise contrasts, and descriptive statistics
+* **hsdtable.R:** function to output gt() formatted .png file for HSD contrasts from an ANOVA model
 * **roundingnums.R:** helper functions for easy number rounding, mostly for beautifying plots
 * **supptables.R:** pair of functions to output gt() formatted .png files for main regression model summaries and emmeans pairwise contrasts
 
