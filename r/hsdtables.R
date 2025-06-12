@@ -11,7 +11,7 @@
 
 supptable_hsd <- function(hsd, title, outpath, footnote=""){
   
-  hsd <- select(tukey_val, c(contrast, estimate, conf.low, conf.high, adj.p.value))
+  hsd <- select(hsd, c(contrast, estimate, conf.low, conf.high, adj.p.value))
   hsd$adj.p.value <- gtsummary::style_pvalue(hsd$adj.p.value)
   
   hsd %>%
