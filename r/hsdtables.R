@@ -1,17 +1,13 @@
-# Description: pair of functions
-# Functions:
-#  - supptable_main: formatted table of main regression model summary
-#  - supptable_pair: formatted table of pairwise contrasts from a regression model
+# Description: single function
 # Inputs:
-#  - class: either 'linear' or 'logistic'
-#  - type: either 'mixed' ((g)lmer) or 'simple' ((g)lm)
-#  - model: a regression model object [(g)lm, (g)lmerMod]
-#  - contrast: specific emmeans pairwise contrast
+#  - hsd: specific HSD contrast from an aov (use: broom::tidy(TukeyHSD(aov.mdl)))
 #  - title: text of the table title (use: "**title**")
 #  - outpath: outpath for .png image of formatted table
 #  - footnote: text of any string to include as a footnote to the table
+# Output:
+#  - png file of the contrast table
 # Author: Jessica M. Alexander
-# Last Updated: 2025-05-22
+# Last Updated: 2025-06-22
 
 supptable_hsd <- function(hsd, title, outpath, footnote=""){
   
