@@ -9,7 +9,7 @@
 #  - single xlsx file with one sheet for the model summary, one sheet for each contrast specified,
 #    and one sheet for each table (named in accordance with tabnames)
 # Author: Jessica M. Alexander
-# Last Updated: 2025-05-22
+# Last Updated: 2026-04-07
 
 analysistable <- function(modelsum, contrasts, tables, tabnames, outpath){
   
@@ -22,26 +22,30 @@ analysistable <- function(modelsum, contrasts, tables, tabnames, outpath){
   addWorksheet(wb, sheetName="model-summary")
   openxlsx::writeData(wb, sheet="model-summary", modelsum$coefficients, rowNames=TRUE)
   
-  for(i in 1:length(contrasts)){
-    em <- unlist(contrasts[i])
-    preds <- em$emmeans@roles$predictors
-    if(length(preds)==1){
-      name <- paste("emmeans-", preds[1], sep="")
-    } else if(length(preds)==2){
-      name <- paste("emmeans-", preds[1], "|", preds[2], sep="")
-    } else if(length(preds)==3){
-      name <- paste("emmeans-", preds[1], "|", preds[2], "|", preds[3], sep="")
-    } else {
-      stop("ERROR: Function only handles up to three predictors.")
+  if(length(contrasts)>0){
+    for(i in 1:length(contrasts)){
+      em <- unlist(contrasts[i])
+      preds <- em$emmeans@roles$predictors
+      if(length(preds)==1){
+        name <- paste("emmeans-", preds[1], sep="")
+      } else if(length(preds)==2){
+        name <- paste("emmeans-", preds[1], "|", preds[2], sep="")
+      } else if(length(preds)==3){
+        name <- paste("emmeans-", preds[1], "|", preds[2], "|", preds[3], sep="")
+      } else {
+        stop("ERROR: Function only handles up to three predictors.")
+      }
+      addWorksheet(wb, sheetName=name)
+      openxlsx::writeData(wb, sheet=name, em$contrasts, rowNames=TRUE)
     }
-    addWorksheet(wb, sheetName=name)
-    openxlsx::writeData(wb, sheet=name, em$contrasts, rowNames=TRUE)
   }
   
-  for(j in 1:length(tables)){
-    t <- tables[j][[1]]
-    addWorksheet(wb, sheetName=tabnames[j])
-    openxlsx::writeData(wb, sheet=tabnames[j], t)
+  if(length(tables)>0){
+    for(j in 1:length(tables)){
+      t <- tables[j][[1]]
+      addWorksheet(wb, sheetName=tabnames[j])
+      openxlsx::writeData(wb, sheet=tabnames[j], t)
+    }
   }
   
   openxlsx::saveWorkbook(wb, paste(outpath, "_", today, ".xlsx", sep="", collapse=NULL))
